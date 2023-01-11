@@ -203,6 +203,26 @@
                     }
                 ]
             }
+        },
+        "ntierigw": {
+            "Type": "AWS::EC2::InternetGateway",
+            "Properties": {
+                "Tags": [
+                    {
+                        "Key": "name",
+                        "Value": "ntierigw"
+                    }
+                ]
+            }
+        },
+        "AttachGateway": {
+            "Type": "AWS::EC2::VPCGatewayAttachment",
+            "Properties": {
+                "VpcId": "ntiervpc",
+                "InternetGatewayId": {
+                    "Ref": "ntierigw"
+                }
+            }
         }
     }
 }
