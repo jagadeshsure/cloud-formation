@@ -218,9 +218,117 @@
         "AttachGateway": {
             "Type": "AWS::EC2::VPCGatewayAttachment",
             "Properties": {
-                "VpcId": "ntiervpc",
+                "VpcId": {
+                    "Ref": "ntiervpc"
+                },
                 "InternetGatewayId": {
                     "Ref": "ntierigw"
+                }
+            }
+        },
+        "public": {
+            "Type": "AWS::EC2::RouteTable",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "ntiervpc"
+                },
+                "Tags": [
+                    {
+                        "Key": "name",
+                        "Value": "ntier-public"
+                    }
+                ]
+            }
+        },
+        "private": {
+            "Type": "AWS::EC2::RouteTable",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "ntiervpc"
+                },
+                "Tags": [
+                    {
+                        "Key": "name",
+                        "Value": "ntier-public"
+                    }
+                ]
+            }
+        },
+        "publicigwroute": {
+            "Type": "AWS::EC2::Route",
+            "Properties": {
+                "RouteTableId": {
+                    "Ref": "public"
+                },
+                "DestinationCidrBlock": "0.0.0.0/0",
+                "GatewayId": {
+                    "Ref": "ntierigw"
+                }
+            }
+        },
+        "publicweb": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties": {
+                "SubnetId": {
+                    "Ref": "websubnet"
+                },
+                "RouteTableId": {
+                    "Ref": "public"
+                }
+            }
+        },
+        "publicwebha": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties": {
+                "SubnetId": {
+                    "Ref": "websubnetha"
+                },
+                "RouteTableId": {
+                    "Ref": "public"
+                }
+            }
+        },
+        "privateapp": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties": {
+                "SubnetId": {
+                    "Ref": "appsubnet"
+                },
+                "RouteTableId": {
+                    "Ref": "private"
+                }
+            }
+        },
+        "privateappha": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties": {
+                "SubnetId": {
+                    "Ref": "appsubnetha"
+                },
+                "RouteTableId": {
+                    "Ref": "private"
+                }
+            }
+        },
+        "privatedb": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties": {
+                "SubnetId": {
+                    "Ref": "dbsubnet"
+                },
+                "RouteTableId": {
+                    "Ref": "private"
+                }
+            }
+        },
+        "privatedbha": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties": {
+                "SubnetId": {
+                    "Ref": "dbsubnetha"
+                },
+                "RouteTableId": {
+                    "Ref": "private"
                 }
             }
         }
