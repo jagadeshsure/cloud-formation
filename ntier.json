@@ -26,6 +26,18 @@
             "Description": "enter the dbsubnet range",
             "Type": "String",
             "Default": "192.168.2.0/24"
+        },
+        "websubnetaz": {
+            "Description": "select the web subnet az",
+            "Type": "AWS: :EC2: :AvailabilityZone: :Name"
+        },
+        "appsubnetaz": {
+            "Description": "select the app subnet az",
+            "Type": "AWS::EC2::AvailabilityZone::Name"
+        },
+        "dbsubnetaz": {
+            "Description": "select the bd subnet az",
+            "Type": "AWS::EC2::AvailabilityZone::Name"
         }
     },
     "Resources": {
@@ -48,7 +60,9 @@
         "websubnet": {
             "Type": "AWS::EC2::Subnet",
             "Properties": {
-                "AvailabilityZone": "us-east-2a",
+                "AvailabilityZone": {
+                    "Ref": "webbsubnetaz"
+                },
                 "VpcId": {
                     "Ref": "ntiervpc"
                 },
@@ -66,7 +80,9 @@
         "appsubnet": {
             "Type": "AWS::EC2::Subnet",
             "Properties": {
-                "AvailabilityZone": "us-east-2b",
+                "AvailabilityZone": {
+                    "Ref": "appsubnetaz"
+                },
                 "VpcId": {
                     "Ref": "ntiervpc"
                 },
@@ -84,7 +100,9 @@
         "dbsubnet": {
             "Type": "AWS::EC2::Subnet",
             "Properties": {
-                "AvailabilityZone": "us-east-2c",
+                "AvailabilityZone": {
+                    "Ref": "dbsubnetaz"
+                },
                 "VpcId": {
                     "Ref": "ntiervpc"
                 },
