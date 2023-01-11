@@ -29,7 +29,7 @@
         },
         "websubnetaz": {
             "Description": "select the web subnet az",
-            "Type": "AWS: :EC2: :AvailabilityZone: :Name"
+            "Type": "AWS::EC2::AvailabilityZone::Name"
         },
         "appsubnetaz": {
             "Description": "select the app subnet az",
@@ -37,6 +37,33 @@
         },
         "dbsubnetaz": {
             "Description": "select the bd subnet az",
+            "Type": "AWS::EC2::AvailabilityZone::Name"
+        },
+        "websubnetharange": {
+            "Description": "enter the subnet range for web ha subnet",
+            "Type": "String",
+            "Default": "192.168.3.0/24"
+        },
+        "websubnethaaz": {
+            "Description": "enter the subnet range for web subnet ha az",
+            "Type": "AWS::EC2::AvailabilityZone::Name"
+        },
+        "appsubnetharange": {
+            "Description": "enter the subnet range for app subnet ha subnet",
+            "Type": "String",
+            "Default": "192.168.4.0/24"
+        },
+        "appsubnethaaz": {
+            "Description": "enter the subnet range for app subnet ha az",
+            "Type": "AWS::EC2::AvailabilityZone::Name"
+        },
+        "dbsubnetharange": {
+            "Description": "enter the subnet range for db subnet ha subnet",
+            "Type": "String",
+            "Default": "192.168.5.0/24"
+        },
+        "dbsubnethaaz": {
+            "Description": "enter the subnet range for db subnet ha az",
             "Type": "AWS::EC2::AvailabilityZone::Name"
         }
     },
@@ -61,7 +88,7 @@
             "Type": "AWS::EC2::Subnet",
             "Properties": {
                 "AvailabilityZone": {
-                    "Ref": "webbsubnetaz"
+                    "Ref": "websubnetaz"
                 },
                 "VpcId": {
                     "Ref": "ntiervpc"
@@ -113,6 +140,66 @@
                     {
                         "Key": "name",
                         "Value": "fromcf-db1"
+                    }
+                ]
+            }
+        },
+        "websubnetha": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "AvailabilityZone": {
+                    "Ref": "websubnethaaz"
+                },
+                "VpcId": {
+                    "Ref": "ntiervpc"
+                },
+                "CidrBlock": {
+                    "Ref": "websubnetharange"
+                },
+                "Tags": [
+                    {
+                        "Key": "name",
+                        "Value": "fromcf-web2"
+                    }
+                ]
+            }
+        },
+        "appsubnetha": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "AvailabilityZone": {
+                    "Ref": "appsubnethaaz"
+                },
+                "VpcId": {
+                    "Ref": "ntiervpc"
+                },
+                "CidrBlock": {
+                    "Ref": "appsubnetharange"
+                },
+                "Tags": [
+                    {
+                        "Key": "name",
+                        "Value": "fromcf-app2"
+                    }
+                ]
+            }
+        },
+        "dbsubnetha": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "AvailabilityZone": {
+                    "Ref": "dbsubnethaaz"
+                },
+                "VpcId": {
+                    "Ref": "ntiervpc"
+                },
+                "CidrBlock": {
+                    "Ref": "dbsubnetharange"
+                },
+                "Tags": [
+                    {
+                        "Key": "name",
+                        "Value": "fromcf-db2"
                     }
                 ]
             }
